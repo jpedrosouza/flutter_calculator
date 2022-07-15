@@ -29,11 +29,6 @@ class _CalculatorButtonState extends State<CalculatorButton> {
         backgroundColor: MaterialStateProperty.all(
           widget.backgroundColor ?? Colors.white,
         ),
-        shape: MaterialStateProperty.all(
-          const RoundedRectangleBorder(
-            side: BorderSide(color: Colors.grey, width: 0.5),
-          ),
-        ),
       ),
       child: Text(
         widget.text,
