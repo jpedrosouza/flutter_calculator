@@ -14,6 +14,12 @@ class _HomePageState extends State<HomePage> {
   final controller = HomeController();
 
   @override
+  void initState() {
+    controller.init();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Observer(
@@ -63,7 +69,8 @@ class _HomePageState extends State<HomePage> {
       height: MediaQuery.of(context).size.height * 0.7,
       child: GridView.count(
         crossAxisCount: 4,
-        childAspectRatio: (MediaQuery.of(context).size.width / 3.3) / ((MediaQuery.of(context).size.height * 0.57) / 3.6),
+        childAspectRatio: (MediaQuery.of(context).size.width / 3.3) /
+            ((MediaQuery.of(context).size.height * 0.57) / 3.6),
         crossAxisSpacing: 2,
         mainAxisSpacing: 2,
         children: [

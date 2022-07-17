@@ -1,9 +1,12 @@
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 part 'home_controller.g.dart';
 
 class HomeController = HomeStore with _$HomeController;
 
 abstract class HomeStore with Store {
+  late SharedPreferences sharedPreferences;
+
   @observable
   double firstNumber = 0;
 
@@ -60,6 +63,10 @@ abstract class HomeStore with Store {
     firstValue = value;
   }
 
+  Future init() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+  }
+
   @action
   void getValue() {
     if (!firstValue) {
@@ -75,7 +82,7 @@ abstract class HomeStore with Store {
 
   @action
   void calculate() {
-    switch(operation) {
+    switch (operation) {
       case '+':
         setResult(sum());
         break;
@@ -89,6 +96,10 @@ abstract class HomeStore with Store {
         setResult(divide());
         break;
     }
+
+    List<String> resultsHistory = sharedPreferences.getStringList('results_history') ?? [];
+
+    sharedPreferences.setStringList('results_history', resultsHistory);
 
     setFirstValue(false);
     setDisplay(result.toString(), clear: true);
