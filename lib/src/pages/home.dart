@@ -51,6 +51,16 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        '${controller.firstNumber} ${controller.operation} ${controller.secondNumber}',
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 45, 120, 157),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

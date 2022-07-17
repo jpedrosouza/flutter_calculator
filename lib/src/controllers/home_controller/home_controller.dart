@@ -25,6 +25,9 @@ abstract class HomeStore with Store {
   @observable
   bool firstValue = false;
 
+  @observable
+  bool clearNext = false;
+
   @action
   void setFirstNumber(double value) {
     firstNumber = value;
@@ -47,8 +50,9 @@ abstract class HomeStore with Store {
 
   @action
   void setDisplay(String value, {bool clear = false}) {
-    if (display == '0') {
+    if (display == '0' || clearNext) {
       display = value;
+      clearNext = false;
     } else {
       if (clear) {
         display = value;
@@ -97,12 +101,15 @@ abstract class HomeStore with Store {
         break;
     }
 
-    List<String> resultsHistory = sharedPreferences.getStringList('results_history') ?? [];
+    List<String> resultsHistory =
+        sharedPreferences.getStringList('results_history') ?? [];
 
     sharedPreferences.setStringList('results_history', resultsHistory);
 
     setFirstValue(false);
     setDisplay(result.toString(), clear: true);
+
+    clearNext = true;
   }
 
   @action
