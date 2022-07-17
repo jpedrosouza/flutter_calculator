@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    controller.init();
+    controller.init(context);
     super.initState();
   }
 
@@ -32,36 +32,39 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.3,
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.all(20),
-                color: Colors.grey[200],
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      controller.display,
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 45, 120, 157),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        '${controller.firstNumber} ${controller.operation} ${controller.secondNumber}',
+              GestureDetector(
+                onTap: () => controller.navigateToResultsHistoryPage(),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.all(20),
+                  color: Colors.grey[200],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        controller.display,
                         style: const TextStyle(
                           color: Color.fromARGB(255, 45, 120, 157),
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Text(
+                          '${controller.firstNumber} ${controller.operation} ${controller.secondNumber}',
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 45, 120, 157),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               calculatorButtons(),

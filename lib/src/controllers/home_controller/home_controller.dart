@@ -1,10 +1,15 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_calculator/src/pages/results_history.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 part 'home_controller.g.dart';
 
 class HomeController = HomeStore with _$HomeController;
 
 abstract class HomeStore with Store {
+  late BuildContext pageContext;
   late SharedPreferences sharedPreferences;
 
   @observable
@@ -67,7 +72,9 @@ abstract class HomeStore with Store {
     firstValue = value;
   }
 
-  Future init() async {
+  Future init(BuildContext pageContext) async {
+    this.pageContext = pageContext;
+
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
@@ -103,6 +110,8 @@ abstract class HomeStore with Store {
 
     List<String> resultsHistory =
         sharedPreferences.getStringList('results_history') ?? [];
+
+    resultsHistory.add('$firstNumber $operation $secondNumber = $result');
 
     sharedPreferences.setStringList('results_history', resultsHistory);
 
@@ -146,5 +155,16 @@ abstract class HomeStore with Store {
     firstNumber = 0;
     secondNumber = 0;
     result = 0;
+  }
+
+  void navigateToResultsHistoryPage() {
+    Navigator.push(
+      pageContext,
+      MaterialPageRoute(
+        builder: (_) => ResultsHistoryPage(
+          sharedPreferences.getStringList('results_history') ?? [],
+        ),
+      ),
+    );
   }
 }
