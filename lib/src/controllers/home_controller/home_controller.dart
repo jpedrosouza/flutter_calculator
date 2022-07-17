@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calculator/src/pages/results_history.dart';
 import 'package:mobx/mobx.dart';
@@ -72,11 +71,15 @@ abstract class HomeStore with Store {
     firstValue = value;
   }
 
+  // Init class variables
+
   Future init(BuildContext pageContext) async {
     this.pageContext = pageContext;
 
     sharedPreferences = await SharedPreferences.getInstance();
   }
+
+  // Get numbers from user interface
 
   @action
   void getValue() {
@@ -90,6 +93,8 @@ abstract class HomeStore with Store {
       calculate();
     }
   }
+
+  // Calculate the result
 
   @action
   void calculate() {
@@ -121,11 +126,15 @@ abstract class HomeStore with Store {
     clearNext = true;
   }
 
+  // Calculate the sum of the two numbers
+
   @action
   double sum() {
     result = firstNumber + secondNumber;
     return result;
   }
+
+  // Calculate the subtraction of the two numbers
 
   @action
   double subtract() {
@@ -133,11 +142,15 @@ abstract class HomeStore with Store {
     return result;
   }
 
+  // Calculate the multiplication of the two numbers
+
   @action
   double multiply() {
     result = firstNumber * secondNumber;
     return result;
   }
+
+  // Calculate the division of the two numbers
 
   @action
   double divide() {
@@ -145,10 +158,14 @@ abstract class HomeStore with Store {
     return result;
   }
 
+  // Clear the last number from display
+
   @action
   void clearLast() {
     display = display.substring(0, display.length - 1);
   }
+
+  // Clear the display
 
   @action
   void clear() {
@@ -156,6 +173,8 @@ abstract class HomeStore with Store {
     secondNumber = 0;
     result = 0;
   }
+
+  // Navigate to the results history page
 
   void navigateToResultsHistoryPage() {
     Navigator.push(
